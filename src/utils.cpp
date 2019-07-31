@@ -21,8 +21,17 @@
 #include <iostream>
 #include <vector>
 #include <assert.h>
+#include <algorithm> // std::max
 
 #include <utils.h>
+
+#if defined(_MSC_VER)
+int posix_memalign(void **memptr, size_t alignment, size_t size) {
+  void* ptr = _aligned_malloc(size, alignment);
+  *memptr = ptr;
+  return !ptr;
+}
+#endif
 
 namespace tcl
 { 
@@ -113,8 +122,8 @@ namespace tcl
       std::cout<< "GEMM: " << transa+'\0' << " "<< transb+'\0' << " "<< *m << " " << *n << " " << *k << std::endl;
 #endif
       cgemm_(transa, transb, m, n, k,
-            (const float _Complex*) alpha, (const float _Complex*)a, lda, (const float _Complex*)b, ldb,
-            (const float _Complex*) beta, (float _Complex*)c, ldc);
+            (const COMPLEX_FLOAT*) alpha, (const COMPLEX_FLOAT*)a, lda, (const COMPLEX_FLOAT*)b, ldb,
+            (const COMPLEX_FLOAT*) beta, (COMPLEX_FLOAT*)c, ldc);
    }
 
    template<> 
@@ -128,7 +137,7 @@ namespace tcl
       std::cout<< "GEMM: " << transa+'\0' << " "<< transb+'\0' << " "<< *m << " " << *n << " " << *k << std::endl;
 #endif
       zgemm_(transa, transb, m, n, k,
-            (const double _Complex*) alpha, (const double _Complex*)a, lda, (const double _Complex*)b, ldb,
-            (const double _Complex*) beta, (double _Complex*)c, ldc);
+            (const COMPLEX_DOUBLE*) alpha, (const COMPLEX_DOUBLE*)a, lda, (const COMPLEX_DOUBLE*)b, ldb,
+            (const COMPLEX_DOUBLE*) beta, (COMPLEX_DOUBLE*)c, ldc);
    }
 }

@@ -52,13 +52,13 @@ void dTensorMult(const double alpha, const double *A, const long *sizeA, const l
                                      const double *B, const long *sizeB, const long *outerSizeB, const char* indB,
                  const double beta ,       double *C, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor = 0);
 
-void cTensorMult(const float _Complex alpha, const float _Complex *A, const long *sizeA, const long *outerSizeA, const char* indA,
-                                            const float _Complex *B, const long *sizeB, const long *outerSizeB, const char* indB,
-                 const float _Complex beta ,       float _Complex *C, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor = 0);
+void cTensorMult(const COMPLEX_FLOAT alpha, const COMPLEX_FLOAT *A, const long *sizeA, const long *outerSizeA, const char* indA,
+                                            const COMPLEX_FLOAT *B, const long *sizeB, const long *outerSizeB, const char* indB,
+                 const COMPLEX_FLOAT beta ,       COMPLEX_FLOAT *C, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor = 0);
 
-void zTensorMult(const double _Complex alpha, const double _Complex *A, const long *sizeA, const long *outerSizeA, const char* indA,
-                                            const double _Complex *B, const long *sizeB, const long *outerSizeB, const char* indB,
-                 const double _Complex beta ,       double _Complex *C, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor = 0);
+void zTensorMult(const COMPLEX_DOUBLE alpha, const COMPLEX_DOUBLE *A, const long *sizeA, const long *outerSizeA, const char* indA,
+                                            const COMPLEX_DOUBLE *B, const long *sizeB, const long *outerSizeB, const char* indB,
+                 const COMPLEX_DOUBLE beta ,       COMPLEX_DOUBLE *C, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor = 0);
 
 void randomNumaAwareInit(float *data, const long *size, int dim);
 }

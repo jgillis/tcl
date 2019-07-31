@@ -19,6 +19,7 @@
 #ifndef TCL_UTILS_H
 #define TCL_UTILS_H
 
+#define NOMINMAX
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -26,6 +27,12 @@
 #include <list>
 
 #include "tcl_types.h"
+
+#if defined(_MSC_VER)
+int posix_memalign(void **memptr, size_t alignment, size_t size);
+#endif
+
+#define MAX_LEVEL 10
 
 extern "C"
 {
@@ -41,14 +48,14 @@ extern "C"
          const double *beta, double *c, const int *ldc);
    void cgemm_(const char *transa, const char *transb,
          const int *m, const int *n, const int *k,
-         const float _Complex *alpha, const float _Complex *a,
-         const int *lda, const float _Complex *b, const int *ldb,
-         const float _Complex *beta, float _Complex *c, const int *ldc);
+         const COMPLEX_FLOAT *alpha, const COMPLEX_FLOAT *a,
+         const int *lda, const COMPLEX_FLOAT *b, const int *ldb,
+         const COMPLEX_FLOAT *beta, COMPLEX_FLOAT *c, const int *ldc);
    void zgemm_(const char *transa, const char *transb,
          const int *m, const int *n, const int *k,
-         const double _Complex *alpha, const double _Complex *a,
-         const int *lda, const double _Complex *b, const int *ldb,
-         const double _Complex *beta, double _Complex *c, const int *ldc);
+         const COMPLEX_DOUBLE *alpha, const COMPLEX_DOUBLE *a,
+         const int *lda, const COMPLEX_DOUBLE *b, const int *ldb,
+         const COMPLEX_DOUBLE *beta, COMPLEX_DOUBLE *c, const int *ldc);
 }
 
 namespace tcl

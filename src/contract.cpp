@@ -12,7 +12,7 @@
 *   GNU General Public License for more details.
 *
 *   You should have received a copy of the GNU General Public License
-*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*   along with this program.  If !, see <http://www.gnu.org/licenses/>.
 */
 
 
@@ -132,17 +132,17 @@ namespace tcl
       for(auto idx : loopIndices)
       {
          for(auto it = indicesA.rbegin(); it != indicesA.rend() && *it != idx; it++)
-            if( not find(*it, loopIndices) ) {
+            if( ! find(*it, loopIndices) ) {
                transAreq = true;
                break;
             }
          for(auto it = indicesB.rbegin(); it != indicesB.rend() && *it != idx; it++)
-            if( not find(*it, loopIndices) ) {
+            if( ! find(*it, loopIndices) ) {
                transBreq = true;
                break;
             }
          for(auto it = indicesC.rbegin(); it != indicesC.rend() && *it != idx; it++)
-            if( not find(*it, loopIndices) ) {
+            if( ! find(*it, loopIndices) ) {
                transCreq = true;
                break;
             }
@@ -189,11 +189,11 @@ namespace tcl
                   concatinate_helper(nIndices, indicesB, mIndices, indicesA, loopIndices, newIndicesC);
          }
       }
-      if( not transAreq )
+      if( ! transAreq )
          newIndicesA = indicesA;
-      if( not transBreq )
+      if( ! transBreq )
          newIndicesB = indicesB;
-      if( not transCreq )
+      if( ! transCreq )
          newIndicesC = indicesC;
    }
 
@@ -370,7 +370,7 @@ namespace tcl
                helperTranspose(loopIndices,mIndicesC, kIndicesB, indicesA, candidate.transA, candidate.indicesA);
             }
          }else{ 
-            if( transposeRequiredC ){ //not a, not b, c
+            if( transposeRequiredC ){ //! a, ! b, c
                if( kIndicesA != kIndicesB ){
                   // either A or B also needs to be permuted
                   if( totalSizeA > totalSizeB ){
@@ -636,7 +636,7 @@ namespace tcl
          const auto strideB = stridesB[level];
          const auto strideC = stridesC[level];
          //TODO call batched GEMM
-#pragma omp parallel for if(level==0)
+//#pragma omp parallel for if(level==0)
          for(sizeType i=0; i < end; ++i)
             batchedGEMM( alpha, A + i * strideA, B + i * strideB, beta, C + i * strideC, 
                   candidate, m, n, k, sizes, stridesA, stridesB, stridesC, level+1 );
@@ -661,7 +661,7 @@ namespace tcl
       //! also known as the contracted indices 
       auto kIndices = setMinus(intersect(indicesA, indicesB), loopIndices);
 
-      if( mIndices.size() <= 0 || nIndices.size() <= 0 || kIndices.size() <= 0 ) // TTGT is not applicable; use fallback
+      if( mIndices.size() <= 0 || nIndices.size() <= 0 || kIndices.size() <= 0 ) // TTGT is ! applicable; use fallback
          return contract(alpha, A, B, beta, C);
 
       auto totalSizeA = A->getTotalSize() * sizeof(floatType);
@@ -1398,9 +1398,9 @@ void dTensorMult(const double alpha, const double *dataA, const long *sizeA, con
      printf("[TCL] ERROR: some error occured in tensorMult()\n"); 
 }
 
-void cTensorMult(const float _Complex alpha, const float _Complex *dataA, const long *sizeA, const long *outerSizeA, const char* indA,
-                                     const float _Complex *dataB, const long *sizeB, const long *outerSizeB, const char* indB,
-                 const float _Complex beta ,       float _Complex *dataC, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor )
+void cTensorMult(const COMPLEX_FLOAT alpha, const COMPLEX_FLOAT *dataA, const long *sizeA, const long *outerSizeA, const char* indA,
+                                     const COMPLEX_FLOAT *dataB, const long *sizeB, const long *outerSizeB, const char* indB,
+                 const COMPLEX_FLOAT beta ,       COMPLEX_FLOAT *dataC, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor )
 {
    tcl::indicesType indicesA, indicesB, indicesC;
    tcl::split(std::string(indA), ',', indicesA);
@@ -1457,9 +1457,9 @@ void cTensorMult(const float _Complex alpha, const float _Complex *dataA, const 
      printf("[TCL] ERROR: some error occured in tensorMult()\n"); 
 }
 
-void zTensorMult(const double _Complex alpha, const double _Complex *dataA, const long *sizeA, const long *outerSizeA, const char* indA,
-                                     const double _Complex *dataB, const long *sizeB, const long *outerSizeB, const char* indB,
-                 const double _Complex beta ,       double _Complex *dataC, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor )
+void zTensorMult(const COMPLEX_DOUBLE alpha, const COMPLEX_DOUBLE *dataA, const long *sizeA, const long *outerSizeA, const char* indA,
+                                     const COMPLEX_DOUBLE *dataB, const long *sizeB, const long *outerSizeB, const char* indB,
+                 const COMPLEX_DOUBLE beta ,       COMPLEX_DOUBLE *dataC, const long *sizeC, const long *outerSizeC, const char* indC, const int useRowMajor )
 {
    tcl::indicesType indicesA, indicesB, indicesC;
    tcl::split(std::string(indA), ',', indicesA);
